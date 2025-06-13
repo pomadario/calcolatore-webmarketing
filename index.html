@@ -47,10 +47,21 @@
 </head>
 <body>
   <h1>Calcola in tempo reale quanto investire in web marketing</h1>
-  <p>Stabilisci quanto investire in modo strategico, sulla base dei tuoi obiettivi e delle caratteristiche della tua azienda. Inserisci i dati richiesti e ottieni una simulazione personalizzata.</p>
+  <p>
+    Uno dei dubbi più frequenti tra imprenditori e responsabili marketing è: 
+    <em>"Quanto dovrei investire in web marketing per ottenere risultati concreti?"</em>.
+    La risposta non può essere univoca, ma dipende da diversi fattori: gli obiettivi di crescita,
+    il posizionamento competitivo, il tipo di prodotto o servizio, il valore medio d’ordine, la durata del ciclo di acquisto
+    e la capacità della struttura commerciale di convertire i lead in clienti.
+  </p>
+  <p>
+    Questo strumento ti permette di stimare in pochi secondi l’investimento ideale da dedicare al marketing digitale in base al tuo obiettivo
+    di fatturato aggiuntivo generato esclusivamente dal canale web. A partire da dati semplici e oggettivi,
+    potrai calcolare il numero di clienti necessari, il volume di lead da generare, e il budget sostenibile per performance e brand awareness.
+    L’obiettivo è darti una base di lavoro concreta, personalizzata, facilmente condivisibile anche in PDF.
+  </p>
 
   <button onclick="document.getElementById('calcolatore').scrollIntoView({behavior: 'smooth'})">Calcola subito</button>
-  <button onclick="document.getElementById('calcolatore').scrollIntoView({behavior: 'smooth'})">Vai al calcolatore</button>
 
   <div id="calcolatore" class="results">
     <h2>Calcolatore di investimento</h2>
@@ -63,7 +74,7 @@
     <label>Fatturato anno precedente (€)</label>
     <input type="number" id="fatturato" value="5000000">
 
-    <label>Obiettivo nuovo fatturato da web marketing (€)</label>
+    <label>Obiettivo nuovo fatturato derivante esclusavemente da web marketing (€)</label>
     <input type="number" id="obiettivo" value="2000000">
 
     <label>Numero ordini medi per cliente</label>
@@ -95,19 +106,26 @@
       const x = Q * 30;
       const z = x * 0.5;
       const totale = x + z;
-      const percentF = ((totale / F) * 100).toFixed(2);
+      const percentF = ((totale / F) * 100);
 
-      document.getElementById('output').innerHTML = `
+      let risultato = `
         <h3>Risultati per ${azienda || 'la tua azienda'} (${prodotto || 'prodotto/servizio'})</h3>
         <ul>
           <li><strong>Clienti da acquisire (W):</strong> ${Math.round(W)}</li>
           <li><strong>Lead da generare (Q):</strong> ${Math.round(Q)}</li>
           <li><strong>Budget lead generation (x):</strong> €${x.toLocaleString()}</li>
           <li><strong>Budget brand awareness (z):</strong> €${z.toLocaleString()}</li>
-          <li><strong>Totale budget marketing:</strong> €${totale.toLocaleString()} (${percentF}% di F)</li>
-        </ul>
-        <button onclick="window.print()">📄 Salva in PDF</button>
-      `;
+          <li><strong>Totale budget marketing:</strong> €${totale.toLocaleString()} (${percentF.toFixed(2)}% di F)</li>
+        </ul>`;
+
+      if (percentF < 3 || percentF > 5) {
+        risultato += `<p style="color:red"><strong>⚠️ Il budget totale è fuori dal range consigliato (3–5% del fatturato). Potresti dover rivedere l’obiettivo o la strategia.</strong></p>`;
+      } else {
+        risultato += `<p style="color:green"><strong>✅ Il budget è perfettamente in linea con le best practice (3–5% del fatturato).</strong></p>`;
+      }
+
+      risultato += `<button onclick="window.print()">📄 Salva in PDF</button>`;
+      document.getElementById('output').innerHTML = risultato;
     }
   </script>
 </body>
