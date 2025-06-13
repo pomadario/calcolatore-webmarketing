@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcolatore Investimento Web Marketing</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f7f7f7;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 0.6rem 1rem;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .results {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calcola in tempo reale quanto investire in web marketing</h1>
+  <p>Stabilisci quanto investire in modo strategico, sulla base dei tuoi obiettivi e delle caratteristiche della tua azienda. Inserisci i dati richiesti e ottieni una simulazione personalizzata.</p>
+
+  <button onclick="document.getElementById('calcolatore').scrollIntoView({behavior: 'smooth'})">Calcola subito</button>
+  <button onclick="document.getElementById('calcolatore').scrollIntoView({behavior: 'smooth'})">Vai al calcolatore</button>
+
+  <div id="calcolatore" class="results">
+    <h2>Calcolatore di investimento</h2>
+    <label>Nome azienda</label>
+    <input type="text" id="azienda" placeholder="Es. TecnoWeb Srl">
+
+    <label>Tipo di prodotto o servizio</label>
+    <input type="text" id="prodotto" placeholder="Es. Software gestionale">
+
+    <label>Fatturato anno precedente (€)</label>
+    <input type="number" id="fatturato" value="5000000">
+
+    <label>Obiettivo nuovo fatturato da web marketing (€)</label>
+    <input type="number" id="obiettivo" value="2000000">
+
+    <label>Numero ordini medi per cliente</label>
+    <input type="number" id="ordini" value="2">
+
+    <label>Valore medio per ordine (€)</label>
+    <input type="number" id="valoreOrdine" value="50000">
+
+    <label>% conversione lead > cliente</label>
+    <input type="number" id="conversione" value="5">
+
+    <button onclick="calcolaRisultati()">Calcola risultati</button>
+
+    <div id="output" style="margin-top:2rem;"></div>
+  </div>
+
+  <script>
+    function calcolaRisultati() {
+      const azienda = document.getElementById('azienda').value;
+      const prodotto = document.getElementById('prodotto').value;
+      const F = parseFloat(document.getElementById('fatturato').value);
+      const D = parseFloat(document.getElementById('obiettivo').value);
+      const N = parseFloat(document.getElementById('ordini').value);
+      const valore = parseFloat(document.getElementById('valoreOrdine').value);
+      const conv = parseFloat(document.getElementById('conversione').value) / 100;
+
+      const W = D / (N * valore);
+      const Q = W / conv;
+      const x = Q * 30;
+      const z = x * 0.5;
+      const totale = x + z;
+      const percentF = ((totale / F) * 100).toFixed(2);
+
+      document.getElementById('output').innerHTML = `
+        <h3>Risultati per ${azienda || 'la tua azienda'} (${prodotto || 'prodotto/servizio'})</h3>
+        <ul>
+          <li><strong>Clienti da acquisire (W):</strong> ${Math.round(W)}</li>
+          <li><strong>Lead da generare (Q):</strong> ${Math.round(Q)}</li>
+          <li><strong>Budget lead generation (x):</strong> €${x.toLocaleString()}</li>
+          <li><strong>Budget brand awareness (z):</strong> €${z.toLocaleString()}</li>
+          <li><strong>Totale budget marketing:</strong> €${totale.toLocaleString()} (${percentF}% di F)</li>
+        </ul>
+        <button onclick="window.print()">📄 Salva in PDF</button>
+      `;
+    }
+  </script>
+</body>
+</html>
